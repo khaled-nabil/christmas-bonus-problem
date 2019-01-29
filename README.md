@@ -1,7 +1,8 @@
 # Configuring Webpack for ES6 and JSX
 ## Install webpack and webpack-cli
-
 	npm i webpack webpack-cli --save-dev
+## Install webpack html plugin
+    npm i html-webpack-plugin html-loader --save-dev
 ## Create a build in package.json
 	"scripts": {
 	  "build": "webpack --mode production"
@@ -19,19 +20,41 @@
 ## Create webpack config
 	touch webpack.config.js
 ### Add the following configuration
-	module.exports = {
-	  module: {
-		rules: [
-		  {
-			test: /\.(js|jsx)$/,
-			exclude: /node_modules/,
-			use: {
-			  loader: "babel-loader"
-			}
-		  }
-		]
-	  }
-	};
-	
+    const HtmlWebPackPlugin = require("html-webpack-plugin");
+    module.exports = {
+      module: {
+        rules: [
+          {
+            test: /\.(js|jsx)$/,
+            exclude: /node_modules/,
+            use: {
+              loader: "babel-loader"
+            }
+          },
+          {
+            test: /\.html$/,
+            use: [
+              {
+                loader: "html-loader"
+              }
+            ]
+          }
+        ]
+      },
+      plugins: [
+        new HtmlWebPackPlugin({
+          template: "./src/index.html",
+          filename: "./index.html"
+        })
+      ]
+    };	
+    
+
+# Configure webpack dev server
+## Install webpack-dev-server
+    npm i webpack-dev-server --save-dev
+## Add start script into package.json scripts
+    "start": "webpack-dev-server --open --mode development",
+    
 # Installing React
 	npm i react react-dom --save-dev
