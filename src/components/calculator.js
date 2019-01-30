@@ -19,6 +19,8 @@ class Calculator extends Component {
             return false;
         else if (numbers[next - 1] > target) //if the current last value is bigger than the sum so far, then skip to next one
             return this.secondPhaseFilter(numbers, target, next - 1,);
+        else if(numbers.slice(0,next).reduce((t, a) => t + a) < target) //optimization step: get the summation of the rest, if less than current value, then no point searching further
+            return false;
         else { //branch out to find next different combos using the current value or not using it
             let newTarget = target - numbers[next - 1];
             return this.secondPhaseFilter(numbers, target, next - 1) || this.secondPhaseFilter(numbers, newTarget, next - 1);
@@ -42,7 +44,7 @@ class Calculator extends Component {
         }, 0) > v);
 
         let filteredEmployees = higherSumDivisorEmployees.filter(e => {
-            return this.secondPhaseFilter(listProperDivisors.get(e), e, listProperDivisors.get(e).length)
+            return !this.secondPhaseFilter(listProperDivisors.get(e), e, listProperDivisors.get(e).length)
         });
         this.setState({
             employeesWithBonus: filteredEmployees
