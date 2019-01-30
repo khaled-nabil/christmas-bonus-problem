@@ -30,9 +30,13 @@ class Calculator extends Component {
             }
             //return v % val ===0?sum+val:sum;
         }, 0) > v);
+        let remap = new Map();
+        for(let emp of allEmployees) {
+            remap.set(emp,map.get(emp));
+        }
         //console.log(map);
         this.setState({
-            test: map,
+            test: remap,
             employeesWithBonus: allEmployees
         });
     }
