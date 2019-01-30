@@ -2,17 +2,17 @@ import React from 'react'
 
 function Employee(props){
     return (
-        <p>Emp: {props.resource}</p>
+        <li className="list-inline-item">{props.resource}</li>
     );
 }
 const RenderEmployees = (props) => {
     let results = props.selectedEmployees;
     return (
-        <div className="card-columns">
+        <ul className="list-inline">
             {results.map((resource) => {
-                return <Employee key={resource} resource={resource}/>;
+                return <Employee key={resource} resource={resource}/>
             })}
-        </div>
+        </ul>
     )
 };
 export default RenderEmployees

@@ -1,28 +1,15 @@
 import React from 'react'
 
-/*function findSubset(numbers, target) {
-    let last = numbers.length - 1;
-    if (target === 0)
+function findSubset(numbers, target, next) {
+    if (target === 0) //target has been reached
         return true;
-    else if (numbers.length === 0 && target !== 0)
+    else if (next === 0 && target !== 0) //no subset can be equal to the target
         return false;
-    else if (numbers[last] > target)
-        return findSubset(numbers.splice(-1), target);
-    else {
-        let newTarget = target - numbers[last];
-        return findSubset(numbers.splice(-1), target) || findSubset(numbers.splice(-1), newTarget);
-    }
-}*/
-function findSubset(numbers,n, target) {
-    if (target === 0)
-        return true;
-    else if (n === 0 && target !== 0)
-        return false;
-    else if (numbers[n-1] > target)
-        return findSubset(numbers,n-1, target);
-    else {
-        let newTarget = target - numbers[n];
-        return findSubset(numbers, n-1, target) || findSubset(numbers,n-1, newTarget);
+    else if (numbers[next-1] > target) //if the current last value is bigger than the sum so far, then skip to next one
+        return findSubset(numbers,next-1, target);
+    else { //branch out to find next different combos using the current value or not using it
+        let newTarget = target - numbers[next-1];
+        return findSubset(numbers, next-1, target) || findSubset(numbers,next-1, newTarget);
     }
 }
 
@@ -69,8 +56,7 @@ const Test = (props) => {
     let rows = [];
     for (let rs of results) {
         if (rs[1].length > 1) {
-           // rows.push(<p key={rs[0]}>{subsetSum(rs[1], rs[0]) ? "true" : "false"} {rs[0]} {rs[1].join("\t")}</p>);
-            rows.push(<p key={rs[0]}>{findSubset(rs[1], rs[1].length, rs[0]) ? "true" : "false"} {rs[0]} {rs[1].join("\t")}</p>);
+            rows.push(<p key={rs[0]}>{findSubset(rs[1], rs[0], rs[1].length) ? "true" : "false"} {rs[0]} {rs[1].join("\t")}</p>);
         }
     }
     return <div>{rows}</div>;
