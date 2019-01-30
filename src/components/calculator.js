@@ -12,7 +12,7 @@ class Calculator extends Component {
         this.secondPhaseFilter = this.secondPhaseFilter.bind(this);
     }
 
-    secondPhaseFilter(numbers, target, next, text) {
+    secondPhaseFilter(numbers, target, next) {
         if (target === 0) //target has been reached
             return true;
         else if (next === 0 && target !== 0) //no subset can be equal to the target
@@ -21,7 +21,7 @@ class Calculator extends Component {
             return this.secondPhaseFilter(numbers, target, next - 1,);
         else { //branch out to find next different combos using the current value or not using it
             let newTarget = target - numbers[next - 1];
-            return this.secondPhaseFilter(numbers, target, next - 1, "method 1") || this.secondPhaseFilter(numbers, newTarget, next - 1, "method 2");
+            return this.secondPhaseFilter(numbers, target, next - 1) || this.secondPhaseFilter(numbers, newTarget, next - 1);
         }
     }
 
