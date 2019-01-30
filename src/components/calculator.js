@@ -1,7 +1,5 @@
 import React, {Component} from 'react'
 import RenderEmployees from "./selectedEmp"
-import Test from "./test"
-
 
 class Calculator extends Component {
     constructor(props) {
